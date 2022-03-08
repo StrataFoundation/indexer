@@ -1,6 +1,6 @@
 [package]
 name = "holaplex-indexer"
-version = "0.1.0"
+version = "1.0.0"
 authors = [
   "ryans <ryans@holaplex.com>",
 ]
@@ -82,10 +82,10 @@ rev = "709a8768a7f71df2aba48cf9862835877a036e08"
 # Workspace dependencies
 [dependencies.indexer-core]
 package = "holaplex-indexer-core"
-version = "=0.1.0"
+version = "=1.0.0"
 path = "../core"
 
 [dependencies.indexer-rabbitmq]
 package = "holaplex-indexer-rabbitmq"
-version = "=0.1.0"
+version = "=1.0.0"
 path = "../rabbitmq"
