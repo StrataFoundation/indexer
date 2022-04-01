@@ -8,7 +8,7 @@ use objects::{
 };
 use reqwest::Url;
 
-use super::prelude::*;
+use super::{prelude::*, wallet::Wallet};
 
 #[derive(Debug, Clone)]
 pub struct NftAttribute {
@@ -273,7 +273,7 @@ If no value is provided, it will return XSmall")))]
         })
     }
 
-    pub async fn creators(&self, ctx: &AppContext) -> FieldResult<Vec<NftCreator>> {
+    pub async fn creators(&self, ctx: &AppContext) -> FieldResult<Vec<Wallet>> {
         ctx.nft_creators_loader
             .load(self.address.clone().into())
             .await
@@ -287,7 +287,7 @@ If no value is provided, it will return XSmall")))]
             .map_err(Into::into)
     }
 
-    pub async fn owner(&self, ctx: &AppContext) -> FieldResult<Option<NftOwner>> {
+    pub async fn owner(&self, ctx: &AppContext) -> FieldResult<Option<Wallet>> {
         ctx.nft_owner_loader
             .load(self.mint_address.clone().into())
             .await

@@ -1,9 +1,8 @@
-use objects::listing::Bid;
+use objects::{listing::Bid, twitter_profile::TwitterProfile};
 use tables::bids;
 
 use super::prelude::*;
-
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, GraphQLObject)]
 pub struct Wallet {
     pub address: String,
 }
@@ -27,6 +26,13 @@ impl Wallet {
         rows.into_iter()
             .map(TryInto::try_into)
             .collect::<Result<_, _>>()
+            .map_err(Into::into)
+    }
+
+    pub async fn profile(&self, ctx: &AppContext) -> FieldResult<Option<TwitterProfile>> {
+        ctx.twitter_profile_loader
+            .load(self.address.clone().into())
+            .await
             .map_err(Into::into)
     }
 }

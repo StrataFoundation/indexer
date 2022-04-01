@@ -290,7 +290,7 @@ pub struct NftActivity {
     #[sql_type = "Array<VarChar>"]
     pub wallets: Vec<String>,
 
-    /// Listing/Purchase created time
+    /// Activity type - purchase or listing
     #[sql_type = "Text"]
     pub activity_type: String,
 }
@@ -879,4 +879,17 @@ pub struct TwitterHandle<'a> {
     pub twitter_handle: Cow<'a, str>,
     /// Solana slot number
     pub slot: i64,
+}
+/// A row in the `twitter_profile` query
+#[derive(Debug, Clone, QueryableByName)]
+pub struct TwitterProfile {
+    /// The twitter avatar url
+    #[sql_type = "Nullable<Text>"]
+    pub avatar_url: Option<String>,
+    /// The twitter banner url
+    #[sql_type = "Nullable<Text>"]
+    pub banner_url: Option<String>,
+    /// The twitter handle
+    #[sql_type = "Text"]
+    pub handle: String,
 }

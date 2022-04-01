@@ -9,10 +9,11 @@ use objects::{
     stats::{MarketStats, MintStats},
     store_creator::StoreCreator,
     storefront::Storefront,
+    twitter_profile::TwitterProfile,
 };
 use scalars::{markers::StoreConfig, PublicKey};
 
-use super::prelude::*;
+use super::{objects::wallet::Wallet, prelude::*};
 
 #[derive(Clone)]
 pub struct AppContext {
@@ -27,8 +28,8 @@ pub struct AppContext {
     pub market_stats_loader: Loader<PublicKey<StoreConfig>, Option<MarketStats>>,
     pub mint_stats_loader: Loader<PublicKey<AuctionHouse>, Option<MintStats>>,
     pub nft_attributes_loader: Loader<PublicKey<Nft>, Vec<NftAttribute>>,
-    pub nft_creators_loader: Loader<PublicKey<Nft>, Vec<NftCreator>>,
-    pub nft_owner_loader: Loader<PublicKey<Nft>, Option<NftOwner>>,
+    pub nft_creators_loader: Loader<PublicKey<Nft>, Vec<Wallet>>,
+    pub nft_owner_loader: Loader<PublicKey<Nft>, Option<Wallet>>,
     pub nft_activities_loader: Loader<PublicKey<Nft>, Vec<NftActivity>>,
     pub storefront_loader: Loader<PublicKey<Storefront>, Option<Storefront>>,
     pub listing_receipts_loader: Loader<PublicKey<Nft>, Vec<ListingReceipt>>,
@@ -36,6 +37,7 @@ pub struct AppContext {
     pub bid_receipts_loader: Loader<PublicKey<Nft>, Vec<BidReceipt>>,
     pub store_creator_loader: Loader<PublicKey<StoreConfig>, Vec<StoreCreator>>,
     pub collection_loader: Loader<PublicKey<StoreCreator>, Vec<Nft>>,
+    pub twitter_profile_loader: Loader<PublicKey<TwitterProfile>, Option<TwitterProfile>>,
 }
 
 impl juniper::Context for AppContext {}
@@ -61,6 +63,7 @@ impl AppContext {
             bid_receipts_loader: Loader::new(batcher.clone()),
             store_creator_loader: Loader::new(batcher.clone()),
             collection_loader: Loader::new(batcher),
+            twitter_profile_loader: Loader::new(batcher),
             db_pool,
             shared,
         }

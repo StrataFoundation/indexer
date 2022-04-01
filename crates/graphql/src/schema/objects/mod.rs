@@ -11,6 +11,7 @@ pub mod purchase_receipt;
 pub mod stats;
 pub mod store_creator;
 pub mod storefront;
+pub mod twitter_profile;
 pub mod wallet;
 
 pub(self) mod prelude {
