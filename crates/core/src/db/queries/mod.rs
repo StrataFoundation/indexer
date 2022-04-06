@@ -1,5 +1,6 @@
 //! Reusable query operations for common or complicated queries.
 
+pub mod charts;
 pub mod listing_denylist;
 pub mod metadata_edition;
 pub mod metadatas;
