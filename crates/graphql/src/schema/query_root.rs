@@ -1,6 +1,7 @@
 use indexer_core::db::queries;
 use objects::{
     auction_house::AuctionHouse,
+    chart::PriceChart,
     creator::Creator,
     denylist::Denylist,
     listing::{Listing, ListingColumns, ListingRow},
@@ -34,6 +35,25 @@ impl From<AttributeFilter> for queries::metadatas::AttributeFilter {
 
 #[graphql_object(Context = AppContext)]
 impl QueryRoot {
+    #[graphql(arguments(
+        auction_housese(description = "List of auction houses"),
+        start_date(description = "Start date for which we want to get the average price"),
+        end_date(description = "End date for which we want to get the average price")
+    ))]
+    pub async fn charts(
+        &self,
+        _context: &AppContext,
+        auction_houses: Vec<PublicKey<AuctionHouse>>,
+        start_date: DateTime<Utc>,
+        end_date: DateTime<Utc>,
+    ) -> FieldResult<PriceChart> {
+        Ok(PriceChart {
+            auction_houses,
+            start_date,
+            end_date,
+        })
+    }
+
     async fn profile(
         &self,
         ctx: &AppContext,
